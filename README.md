@@ -63,8 +63,59 @@ Este repositório contém a solução para o desafio de engenharia de dados real
 
 ## Desafio 1.2: Contexto
 
-No exemplo fornecido, temos um objeto chamado detailLines, que representa as linhas do pedido de um cliente em um restaurante. Cada detailLine pode conter não apenas um menuItem, mas também outras instâncias como discount, serviceCharge, tenderMedia e errorCode. Esses elementos são componentes essenciais para representar a complexidade das transações em um restaurante.
+No exemplo fornecido, o objeto detailLines contém um menuItem. Ele também pode conter instâncias de:
+- **discount**
+- **serviceCharge**
+- **tenderMedia**
+- **errorCode**
 
-O objetivo é transcrever esse objeto JSON para tabelas SQL, estruturando os dados de forma eficiente para suportar operações de restaurante, garantindo integridade, flexibilidade e performance nas consultas.
+Foi solicitado transcrever este modelo JSON para tabelas SQL, garantindo que a estrutura faça sentido para operações de restaurante. A implementação foi realizada utilizando o MySQL como sistema de gerenciamento de banco de dados. O código para criação das tabelas está disponível no repositório, na pasta `sql`, com o nome `create_tables.sql`.
 
-Exemplo de mapeamento:
+O MySQL foi escolhido pela sua simplicidade, ampla adoção e excelente suporte a projetos de pequena a média escala, sendo uma solução robusta para sistemas transacionais, como o de restaurantes.
+
+Além disso, ajustes podem ser necessários para adaptar o código a outros SGBDs, mas ele está otimizado para execução direta no MySQL.
+
+Caso tenha mais dúvidas ou precise de suporte para outro banco, é só avisar!
+
+
+## Desafio 1.3: Descreva a abordagem escolhida em detalhes. Justifique a escolha.
+
+### Abordagem Escolhida
+
+A modelagem do banco de dados foi realizada com base no formato JSON fornecido, respeitando os relacionamentos e a hierarquia dos dados. Para isso, foi aplicada uma abordagem relacional, onde cada objeto JSON foi traduzido em tabelas normalizadas, com chaves primárias e estrangeiras, para garantir integridade e organização dos dados.
+
+### Estrutura das Tabelas
+
+- **Tabela Restaurants**: Representa as unidades do restaurante. Contém um identificador único (locRef) que serve como chave primária.
+- **Tabela GuestChecks**: Armazena informações sobre pedidos (contas) realizados no restaurante. Está vinculada à tabela Restaurants por meio da coluna locRef.
+- **Tabela Taxes**: Detalha os impostos aplicados a cada pedido. Referencia a tabela GuestChecks.
+- **Tabela DetailLines**: Contém os itens detalhados dos pedidos. Esta tabela está vinculada à GuestChecks e serve como base para os elementos relacionados.
+Tabelas Associadas a DetailLines:
+- **MenuItems**: Representa os itens do cardápio vinculados a uma linha de detalhe.
+- **Discounts**: Armazena os descontos aplicados aos itens.
+- **ServiceCharge**: Registra as taxas de serviço aplicadas.
+- **TenderMedia**: Detalha os métodos de pagamento utilizados.
+- **ErrorCode**: Captura códigos de erro relacionados ao processamento das linhas.
+
+### Diagrama do Banco de Dados
+
+![Estrutura do Banco de Dados](database_structure_diagram.png)
+
+### Justificativa da Abordagem
+
+- **Flexibilidade**: A separação em tabelas específicas para Discounts, ServiceCharge, TenderMedia e ErrorCode permite fácil expansão do sistema, como a inclusão de novos tipos de instâncias no futuro.
+- **Integridade**: O uso de chaves estrangeiras assegura a consistência entre as tabelas, eliminando riscos de dados desconectados ou inválidos.
+- **Desempenho**: Apesar de a estrutura ser eficiente, um conhecimento mais aprofundado do negócio poderia levar à simplificação de algumas tabelas ou até mesmo à sua fusão, otimizando consultas frequentes e reduzindo a complexidade dos joins.
+Pontos de Melhoria
+
+A implementação atual segue uma modelagem genérica e robusta, mas ajustes podem ser feitos para melhorar o desempenho e adequação às necessidades do restaurante:
+
+- **Fusão de tabelas**: Caso algumas instâncias, como Discounts e ServiceCharge, sejam usadas com baixa frequência ou tenham poucos atributos, elas podem ser consolidadas diretamente na tabela DetailLines.
+- **Indexação**: A aplicação de índices em colunas frequentemente utilizadas em filtros ou joins pode acelerar as consultas.
+- **Eliminação de redundâncias**: Uma análise do uso real dos dados no sistema pode identificar tabelas ou colunas desnecessárias, simplificando a modelagem.
+
+### Justificativa do uso do MySQL
+
+O MySQL foi escolhido como SGBD por ser amplamente conhecido, fácil de usar e suficientemente robusto para gerenciar sistemas transacionais. Sua compatibilidade com diversos ambientes e ferramentas o torna ideal para aplicações relacionadas a restaurantes.
+
+
