@@ -1,6 +1,6 @@
 # restaurant-data-challenge
 
-## Descrição do Desafio
+## Descrição do Desafio 
 
 Este repositório contém a solução para o desafio de engenharia de dados realizado para o **CBLAB - Coco Bambu**.
 
@@ -118,4 +118,23 @@ A implementação atual segue uma modelagem genérica e robusta, mas ajustes pod
 
 O MySQL foi escolhido como SGBD por ser amplamente conhecido, fácil de usar e suficientemente robusto para gerenciar sistemas transacionais. Sua compatibilidade com diversos ambientes e ferramentas o torna ideal para aplicações relacionadas a restaurantes.
 
+### Integração com o Banco de Dados MySQL via API ERP
+
+Foi desenvolvido um script em Python, chamado `save_json_to_mysql.py`, que realiza a integração entre uma API ERP e o banco de dados MySQL. O objetivo do script é pegar o arquivo JSON, que contém os dados de um pedido feito em um restaurante, e inseri-los nas tabelas previamente criadas no banco de dados MySQL.
+
+O script foi projetado para rodar dentro do ambiente virtual `venvCBLAB`, o qual contém todas as dependências necessárias para a execução correta da integração.
+
+
+Este script foi desenvolvido para automatizar a ingestão de dados de pedidos diretamente de uma API ERP para o banco de dados MySQL. Isso permite a atualização constante e precisa das informações do restaurante, garantindo a integridade e o fluxo contínuo de dados.
+
+A escolha do MySQL foi mantida, pois é uma solução confiável e bem-sucedida para gerenciar dados transacionais, enquanto o uso do Python permite flexibilidade e facilidade de integração com diferentes sistemas de API.
+
+
+## Resumo Desafio 1
+
+O Desafio 1 envolveu a transcrição de um esquema JSON, representando pedidos de um restaurante, para um banco de dados MySQL. A estrutura JSON foi convertida em tabelas relacionais, com foco em pedidos, itens, impostos e descontos. O objetivo foi criar uma base de dados organizada e escalável para armazenar e processar informações dos pedidos de forma eficiente, integrando esses dados com uma API ERP por meio de um script Python automatizado. O MySQL foi escolhido pela sua robustez em gerenciar dados transacionais.
+
+
+
+## DESAFIO 2 
 
