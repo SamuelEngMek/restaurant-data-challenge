@@ -6,9 +6,10 @@ Este repositório contém a solução para o desafio de engenharia de dados real
 
 ## Estrutura do Repositório
 
-- **sql/**: Contém os scripts SQL para a criação de tabelas e estrutura de banco de dados.
-- **src/**: Contém o código-fonte para o processamento de dados, transformações e integração com a API.
-- **ERP.json**: Exemplo de resposta de um endpoint de API de ERP, representando um pedido realizado em um restaurante.
+- **data_lake**/: Contém a estrutura de pastas para armazenamento das respostas da API. A estrutura segue a arquitetura Medallion (Bronze, Silver, Gold).
+- **sql/**: Contém o código SQL para criação das tabelas de acordo com o esquema JSON e um diagrama da estrutura do banco.
+- **src/**: Inclui um script Python responsável por salvar o JSON em um banco de dados MySQL.
+- **venv_cblab/**: Ambiente virtual que contém as dependências necessárias para o projeto, incluindo pacotes Python utilizados para o processamento e integração de dados.
 - **Kanban.pdf**: Documento contendo a organização das tarefas e o progresso do projeto.
 - **README.md**: Documento explicativo contendo a descrição do esquema JSON, abordagem adotada, e a estrutura do projeto.
 
@@ -99,7 +100,7 @@ Tabelas Associadas a DetailLines:
 
 ### Diagrama do Banco de Dados
 
-![Estrutura do Banco de Dados](database_structure_diagram.png)
+![Estrutura do Banco de Dados](sql\database_structure_diagram.png)
 
 ### Justificativa da Abordagem
 
@@ -136,5 +137,31 @@ O Desafio 1 envolveu a transcrição de um esquema JSON, representando pedidos d
 
 
 
-## DESAFIO 2 
+### Desafio 2.1 Por que armazenar as respostas das APIs?
 
+Armazenar as respostas das APIs no Data Lake oferece vantagens como:
+
+- **Persistência dos dados**: Permite preservar informações históricas para auditorias, análises e reprocessamentos.
+- **Versionamento e auditoria**: Armazena históricos para rastrear mudanças nas respostas ao longo do tempo.
+- **Redução de dependência**: Minimiza a dependência das APIs originais, reduzindo a sobrecarga nos sistemas e mitigando problemas de conectividade.
+- **Facilidade de integração**: Facilita a unificação dos dados de múltiplos endpoints, viabilizando análises.
+- **Melhor desempenho**: Dados armazenados localmente no Data Lake podem ser processados mais rapidamente com ferramentas de Big Data.
+- **Preparação para ETL**: Armazenar dados brutos facilita o uso em pipelines ETL para análise avançada.
+
+
+### Desafio 2.2 Estrutura de armazenamento no Data Lake
+
+Os dados coletados das APIs seriam organizados de forma hierárquica e particionada, utilizando campos como `storeId` (identificador da loja) e `busDt` (data de operação) como critérios de particionamento. Essa abordagem facilita a manipulação, permite consultas eficientes e otimiza o desempenho de pipelines de dados. Além disso, as respostas das APIs seriam armazenadas no formato JSON ou Parquet, dependendo do estágio do processamento, garantindo flexibilidade e eficiência.
+
+Para estruturar os dados de maneira escalável e organizada, a Medallion Architecture foi escolhida. Ela utiliza três camadas principais:
+- **Bronze**(Raw): Dados brutos exatamente como recebidos das APIs, mantidos como registro histórico.
+- **Silver**(Clean): Dados limpos e padronizados, com inconsistências resolvidas, enriquecidos e preparados para integração com outras fontes.
+- **Gold**(Curated): Dados modelados e agregados para análises avançadas, relatórios, consumo por ferramentas de BI e aplicação de modelos de Machine Learning, como previsão de tendências, segmentação de clientes e detecção de padrões e anomalias.
+
+A estrutura de pastas necessária para armazenar as respostas das APIs está organizada no repositório como a pasta `data_lake`. Dentro dela, os dados são divididos em três camadas conforme a Medallion Architecture:
+
+### Desafio 2.3 Impacto da alteração do campo
+
+A renomeação de campos nas respostas da API, pode impactar diversos processos de dados. Na ingestão, pode gerar falhas caso os pipelines não sejam atualizados para refletir a mudança. Na transformação, qualquer referência ao campo antigo precisa ser corrigida, ou o pipeline pode falhar. Para a análise, relatórios e dashboards que utilizam o campo antigo precisarão ser ajustados, ou gerarão erros. Além disso, a governança e documentação devem ser atualizadas para garantir clareza e rastreabilidade. 
+
+Para mitigar os erros causados pela alteração de campos nas respostas da API, é crucial abordar cada etapa do processo de ingestão e transformação de dados. Na ingestão, implementar uma camada de validação que verifique se o esquema da API corresponde ao esperado antes de processar os dados. Durante a transformação, utilizar um sistema de mapeamento flexível, como uma tabela de correspondência, para adaptar automaticamente os campos renomeados. Na análise, garantir que todas as consultas e dashboards estejam atualizados para refletir as mudanças. Por fim, manter um processo de versionamento contínuo das APIs e realizar testes regulares para garantir que alterações no esquema não quebrem o fluxo de dados, assegurando a integridade do sistema.
