@@ -100,7 +100,7 @@ Tabelas Associadas a DetailLines:
 
 ### Diagrama do Banco de Dados
 
-![Estrutura do Banco de Dados](sql\database_structure_diagram.png)
+![Estrutura do Banco de Dados](https://github.com/SamuelEngMek/restaurant-data-challenge/blob/1119a7f63a749b3238e386b926068529399e4b4f/sql/database_structure_diagram.png)
 
 ### Justificativa da Abordagem
 
