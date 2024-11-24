@@ -10,8 +10,8 @@ Este repositório contém a solução para o desafio de engenharia de dados real
 - **sql/**: Contém o código SQL para criação das tabelas de acordo com o esquema JSON e um diagrama da estrutura do banco.
 - **src/**: Inclui um script Python responsável por salvar o JSON em um banco de dados MySQL.
 - **venv_cblab/**: Ambiente virtual que contém as dependências necessárias para o projeto, incluindo pacotes Python utilizados para o processamento e integração de dados.
-- **Kanban.pdf**: Documento contendo a organização das tarefas e o progresso do projeto.
 - **README.md**: Documento explicativo contendo a descrição do esquema JSON, abordagem adotada, e a estrutura do projeto.
+- **Kanban.md**: Documento contendo a organização das tarefas e o progresso do projeto.
 
 
 
