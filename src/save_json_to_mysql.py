@@ -3,10 +3,10 @@ import mysql.connector
 
 # Configuração da conexão com o MySQL
 db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": "060464",
-    "database": "restaurantdb"
+    "host": "hostname",
+    "user": "username",
+    "password": "password",
+    "database": "databasename"
 }
 
 # Variável que representa o caminho para o arquivo JSON.
