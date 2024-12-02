@@ -137,7 +137,7 @@ O Desafio 1 envolveu a transcrição de um esquema JSON, representando pedidos d
 
 
 
-### Desafio 2.1 Por que armazenar as respostas das APIs?
+## Desafio 2.1 Por que armazenar as respostas das APIs?
 
 Armazenar as respostas das APIs no Data Lake oferece vantagens como:
 
