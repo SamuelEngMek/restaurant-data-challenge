@@ -122,9 +122,6 @@ O MySQL foi escolhido como SGBD por ser amplamente conhecido, fácil de usar e s
 
 Foi desenvolvido um script em Python, chamado `save_json_to_mysql.py`, que realiza a integração entre uma API ERP e o banco de dados MySQL. O objetivo do script é pegar o arquivo JSON, que contém os dados de um pedido feito em um restaurante, e inseri-los nas tabelas previamente criadas no banco de dados MySQL.
 
-O script foi projetado para rodar dentro do ambiente virtual `venvCBLAB`, o qual contém todas as dependências necessárias para a execução correta da integração.
-
-
 Este script foi desenvolvido para automatizar a ingestão de dados de pedidos diretamente de uma API ERP para o banco de dados MySQL. Isso permite a atualização constante e precisa das informações do restaurante, garantindo a integridade e o fluxo contínuo de dados.
 
 A escolha do MySQL foi mantida, pois é uma solução confiável e bem-sucedida para gerenciar dados transacionais, enquanto o uso do Python permite flexibilidade e facilidade de integração com diferentes sistemas de API.
